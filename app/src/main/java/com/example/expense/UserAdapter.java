@@ -13,22 +13,8 @@ import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
 
-    
-    ArrayList<Expenditure> profiles;
     Context context;
-    
-     class MyViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView mOption, mDate, mAmt;
-        RecyclerView parentlayout;
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            mOption = itemView.findViewById(R.id.mOption);
-            mAmt = itemView.findViewById(R.id.mAmt);
-            mDate = itemView.findViewById(R.id.mDate);
-            parentlayout = itemView.findViewById(R.id.recyclerView);
-        }
-    }
+    ArrayList<Expenditure> profiles;
 
     public UserAdapter(Context c , ArrayList<Expenditure> p)
     {
@@ -43,7 +29,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.mOption.setText(profiles.get(position).getOption());
         holder.mDate.setText(profiles.get(position).getDate());
         holder.mAmt.setText(profiles.get(position).getAmt());
@@ -54,7 +40,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         return profiles.size();
     }
 
-
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
+        TextView mOption, mDate, mAmt;
+        RecyclerView parentlayout;
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            mOption = itemView.findViewById(R.id.mOption);
+            mAmt = itemView.findViewById(R.id.mAmt);
+            mDate = itemView.findViewById(R.id.mDate);
+            parentlayout = itemView.findViewById(R.id.recyclerView);
+        }
+    }
 
 
 }
