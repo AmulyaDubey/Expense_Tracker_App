@@ -7,7 +7,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertController;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -23,36 +25,39 @@ public class ViewActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText edit;
     private FirebaseDatabase db;
-    private ListView listView;
+    private RecyclerView listView;
+    private ArrayList<Expenditure> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        listView=(ListView)findViewById(R.id.listView);
-        edit=(EditText)findViewById(R.id.edit);
+        listView=(RecyclerView) findViewById(R.id.listView);
+        //edit=(EditText)findViewById(R.id.edit);
         mAuth = FirebaseAuth.getInstance();
 
-        final ArrayList<String> list=new ArrayList<>();
-        final ArrayAdapter adapter=new ArrayAdapter<String>(ViewActivity.this,R.layout.activity_view,R.id.listView ,list);
-        listView.setAdapter(adapter);
-        list.add("Hello");
+        final ArrayAdapter adapter=new ArrayAdapter<Expenditure>(ViewActivity.this,R.layout.activity_view,R.id.listView ,list);
+
+        //list.add("Hello");
         String user_id=mAuth.getCurrentUser().getUid();
         //Toast.makeText(ViewActivity.this,user_id,Toast.LENGTH_SHORT).show();
         final DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child("Regular");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                list.clear();
-                Toast.makeText(ViewActivity.this,""+dataSnapshot.getChildrenCount(),Toast.LENGTH_LONG).show();
+                //list.clear();
+                list = new ArrayList<Expenditure>();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                      Expenditure obj=snapshot.getValue(Expenditure.class);
-                    String txt="";
-                    txt= obj.getDes() +" "+ obj.getAmt() +" "+ obj.getOption();
-                    list.add(txt);
+                    Toast.makeText(ViewActivity.this,""+obj.getAmt(),Toast.LENGTH_LONG).show();
+                    //String txt="";
+                    //txt= obj.getDes() +" "+ obj.getAmt() +" "+ obj.getOption();
+                   // list.add(txt);
                 }
-                adapter.notifyDataSetChanged();
+                adapter = new intern_adapter(ViewActivity.this,list,listView);
+                listView.setAdapter(adapter);
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
