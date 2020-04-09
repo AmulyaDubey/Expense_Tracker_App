@@ -7,9 +7,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertController;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,33 +23,39 @@ public class ViewActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText edit;
     private FirebaseDatabase db;
-    private RecyclerView listView;
+    private ListView listView;
     private ArrayList<Expenditure> list;
+    private ArrayAdapter<Expenditure> adapter;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        listView=(RecyclerView) findViewById(R.id.listView);
+        //edit=(EditText)findViewById(R.id.edit);
         mAuth = FirebaseAuth.getInstance();
 
-        final ArrayAdapter adapter=new ArrayAdapter<Expenditure>(ViewActivity.this,R.layout.activity_view,R.id.listView ,list);
+        UserAdapter adapter = new UserAdapter(this, list);
+        listView.setAdapter(adapter);
 
-    
+        //list.add("Hello");
         String user_id=mAuth.getCurrentUser().getUid();
-        final DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child("Regular");
+        reference=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child("Regular");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-              
-                list = new ArrayList<Expenditure>();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                     Expenditure obj=snapshot.getValue(Expenditure.class);
-                     System.out.println(obj);
+                    Expenditure obj=snapshot.getValue(Expenditure.class);
+                    Toast.makeText(ViewActivity.this,""+obj.getAmt()+" "+obj.getOption()+" "+obj.getDes(),Toast.LENGTH_LONG).show();
+                    //String txt="";
+                    //txt= obj.getDes() +" "+ obj.getAmt() +" "+ obj.getOption();
+                    // list.add(txt);
+                    list.add(obj);
                 }
-      
-           }
+
+                //adapter.notifyDataSetChanged();
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError e) {
@@ -62,3 +66,4 @@ public class ViewActivity extends AppCompatActivity {
 
 
 }
+
