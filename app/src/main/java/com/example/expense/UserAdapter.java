@@ -29,11 +29,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        holder.mOption.setText(profiles.get(position).getOption());
-        holder.mDate.setText(profiles.get(position).getDate());
-        holder.mAmt.setText(profiles.get(position).getAmt());
-    }
+    public void onBindViewHolder(@NonNull  MyViewHolder holder,  int position) {
+                     holder.mOption.setText(profiles.get(position).getOption());
+                    holder.mDate.setText(profiles.get(position).getDate());
+                    holder.mAmt.setText(profiles.get(position).getAmt());
+            }
 
     @Override
     public int getItemCount() {
