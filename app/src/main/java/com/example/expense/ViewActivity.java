@@ -36,7 +36,7 @@ public class ViewActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        db=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child("Self Salary");
+        db=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

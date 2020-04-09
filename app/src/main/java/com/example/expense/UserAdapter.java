@@ -30,7 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull  MyViewHolder holder,  int position) {
-                     holder.mOption.setText(profiles.get(position).getOption());
+                     holder.mOption.setText(profiles.get(position).getDes());
                     holder.mDate.setText(profiles.get(position).getDate());
                     holder.mAmt.setText(profiles.get(position).getAmt());
             }
