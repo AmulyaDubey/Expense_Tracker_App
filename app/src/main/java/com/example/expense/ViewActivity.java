@@ -34,31 +34,24 @@ public class ViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view);
 
         listView=(RecyclerView) findViewById(R.id.listView);
-        //edit=(EditText)findViewById(R.id.edit);
         mAuth = FirebaseAuth.getInstance();
 
         final ArrayAdapter adapter=new ArrayAdapter<Expenditure>(ViewActivity.this,R.layout.activity_view,R.id.listView ,list);
 
-        //list.add("Hello");
+    
         String user_id=mAuth.getCurrentUser().getUid();
-        //Toast.makeText(ViewActivity.this,user_id,Toast.LENGTH_SHORT).show();
         final DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child("Regular");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //list.clear();
+              
                 list = new ArrayList<Expenditure>();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                      Expenditure obj=snapshot.getValue(Expenditure.class);
-                    Toast.makeText(ViewActivity.this,""+obj.getAmt(),Toast.LENGTH_LONG).show();
-                    //String txt="";
-                    //txt= obj.getDes() +" "+ obj.getAmt() +" "+ obj.getOption();
-                   // list.add(txt);
+                     System.out.println(obj);
                 }
-                adapter = new intern_adapter(ViewActivity.this,list,listView);
-                listView.setAdapter(adapter);
-                //adapter.notifyDataSetChanged();
-            }
+      
+           }
 
             @Override
             public void onCancelled(@NonNull DatabaseError e) {
