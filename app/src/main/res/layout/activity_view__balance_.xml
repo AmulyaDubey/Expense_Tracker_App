@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    tools:context=".View_Balance_Activity">
+
+    <Button
+        android:id="@+id/button_total_add"
+        android:layout_width="178dp"
+        android:layout_height="357dp"
+        android:background="@drawable/rect_round_btn"
+        android:backgroundTint="#B0D8206D"
+        android:drawableBottom="@drawable/dollar"
+        android:text="View Total Additons"
+        android:textColor="#F6F0F0"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137" />
+
+    <Button
+        android:id="@+id/button_total_exp"
+        android:layout_width="173dp"
+        android:layout_height="346dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginBottom="145dp"
+        android:background="@drawable/rect_round_btn"
+        android:backgroundTint="#B0D8206D"
+        android:drawableBottom="@drawable/dollar2"
+        android:text="View Total Expenses"
+        android:textColor="#F6F0F0"
+        android:textSize="23sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21" />
+
+    <TextView
+        android:id="@+id/mbal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="224dp"
+        android:layout_marginBottom="199dp"
+        android:text="TextView"
+        android:textColor="#A1E6E5E5"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.173" />
+
+    <TextView
+        android:id="@+id/bal_amt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="199dp"
+        android:layout_marginTop="157dp"
+        android:layout_marginEnd="209dp"
+        android:layout_marginBottom="32dp"
+        android:text="Balance:"
+        android:textColor="#B7F3EBEB"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/mbal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.363" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

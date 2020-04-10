@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
         view_bal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeActivity.this,ViewActivity.class));
+                startActivity(new Intent(HomeActivity.this,View_Balance_Activity.class));
             }
         });
 

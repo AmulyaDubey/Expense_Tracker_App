@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewActivity"></activity>
+        <activity android:name=".View_Balance_Activity"></activity>
+        <activity android:name=".ViewActivity" />
         <activity android:name=".SpendActivity" />
         <activity android:name=".AddActivity" />
         <activity
