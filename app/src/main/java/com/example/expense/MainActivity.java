@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText NameText;
     private EditText passwordText;
     private Button Loginbutton;
-    private TextView RegisterTextView;
+    private Button RegisterTextView;
     private FirebaseAuth mAuth;
 
 
@@ -33,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
         NameText=(EditText)findViewById(R.id.NameText);
         passwordText=(EditText)findViewById(R.id.passwordText);
         Loginbutton=(Button)findViewById(R.id.Loginbutton);
-        RegisterTextView=(TextView)findViewById(R.id.RegisterTextView);
+        RegisterTextView=(Button)findViewById(R.id.RegisterTextView);
         mAuth = FirebaseAuth.getInstance();
 
-        if(mAuth.getCurrentUser().getUid()!= null) {
+        if(mAuth.getCurrentUser()!= null) {
             startActivity(new Intent(MainActivity.this, HomeActivity.class));
         }
+
+
         RegisterTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

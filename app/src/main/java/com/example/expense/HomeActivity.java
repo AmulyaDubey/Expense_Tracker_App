@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -18,13 +19,22 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
     private Button add_money, add_exp, view_bal, view_an;
-    private TextView wel;
+    private TextView wel,display_name,logout;
+    private FirebaseAuth mAuth;
+    private DatabaseReference db;
+
 
 
     @Override
@@ -37,6 +47,24 @@ public class HomeActivity extends AppCompatActivity {
         view_bal=(Button)findViewById(R.id.view_bal2);
         view_an=(Button)findViewById(R.id.view_an2);
         wel=(TextView)findViewById(R.id.wel2);
+        display_name=(TextView)findViewById(R.id.display_name);
+        logout=(TextView)findViewById(R.id.logout) ;
+
+        mAuth = FirebaseAuth.getInstance();
+        String user_id=mAuth.getCurrentUser().getUid();
+        db=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("name");
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Toast.makeText(HomeActivity.this, ""+dataSnapshot.getValue(), Toast.LENGTH_SHORT).show();
+                 display_name.setText(""+dataSnapshot.getValue()+"!");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -77,6 +105,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this,ViewActivity.class));
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeActivity.this, MainActivity.class));
             }
         });
     }

@@ -1,18 +1,21 @@
 package com.example.expense;
 
 public class Expenditure {
-        public String date, des, amt,option;
-        public Expenditure(String d, String e,String a, String text)
-        {
-            date=d;
-            des=e;
-            amt=a;
-            option=text;
-        }
+    public String date, des, amt, option;
+    int stamp;
 
-        public Expenditure(){
+    public Expenditure(String d, String e, String a, String text, int st) {
+        date = d;
+        des = e;
+        amt = a;
+        option = text;
+        stamp = st;
+    }
 
-        }
+
+    public Expenditure() {
+
+    }
 
     public String getOption() {
         return option;
@@ -23,27 +26,35 @@ public class Expenditure {
     }
 
     public String getDate() {
-            return date;
-        }
+        return date;
+    }
 
-        public void setDate(String date) {
-            this.date = date;
-        }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-        public String getDes() {
-            return des;
-        }
+    public String getDes() {
+        return des;
+    }
 
-        public void setDes(String des) {
-            this.des = des;
-        }
+    public void setDes(String des) {
+        this.des = des;
+    }
 
-        public String getAmt() {
-            return amt;
-        }
+    public String getAmt() {
+        return amt;
+    }
 
-        public void setAmt(String amt) {
-            this.amt = amt;
-        }
+    public void setAmt(String amt) {
+        this.amt = amt;
+    }
 
+    public int getStamp() {
+        return stamp;
+    }
+
+    public void setStamp(int stamp) {
+        this.stamp = stamp;
+
+    }
 }

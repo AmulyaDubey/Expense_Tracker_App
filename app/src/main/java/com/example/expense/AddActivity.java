@@ -91,7 +91,7 @@ public class AddActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: date: " + dayOfMonth + "/" + month + "/" + year);
-                String date = dayOfMonth + "/" + month + "/" + year;
+                String date = dayOfMonth + "-" + month + "-" + year;
                 mDisplayDate.setText(date);
             }
         };
@@ -108,7 +108,7 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String text = myspinner.getSelectedItem().toString();
                 String user_id=mAuth.getCurrentUser().getUid();
-                reff=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition").child(text);
+                reff=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
 
                 reff.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -128,7 +128,10 @@ public class AddActivity extends AppCompatActivity {
                 String a=giver.getText().toString().trim();
                 String b=amt.getText().toString().trim();
                 String c=mDisplayDate.getText().toString().trim();
-                final Expenditure obj=new Expenditure(c , a , b, text);
+                //Toast.makeText(AddActivity.this, c.substring(5)+c.substring(3,4)+c.substring(0,2), Toast.LENGTH_SHORT).show();
+                 int stamp=Integer.parseInt(c.substring(5)+c.substring(3,4)+c.substring(0,2));
+                 stamp=stamp*(-1);
+                final Expenditure obj=new Expenditure(c , a , b, text, stamp);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
