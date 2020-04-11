@@ -37,53 +37,54 @@ public class SpendActivity extends AppCompatActivity {
 
     private TextView mDisplayDate;
     private FirebaseAuth mAuth;
-    private long maxid=0;
+    private long maxid = 0;
     private FirebaseDatabase db;
     private DatabaseReference reff;
-    private TextView name_add,enter_amt,details_add;
-    private EditText giver,amt;
+    private TextView name_add, enter_amt, details_add;
+    private EditText giver, amt;
     private Button save_btn;
     private FloatingActionButton fab;
-    private static final String TAG="SpendActivity";
+    private static final String TAG = "SpendActivity";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spend);
 
-        name_add=(TextView)findViewById(R.id.name_add2);
-        details_add=(TextView)findViewById(R.id.details_add2);
-        enter_amt=(TextView)findViewById(R.id.enter_amt2);
-        giver=(EditText)findViewById(R.id.giver2);
-        amt=(EditText)findViewById(R.id.amt2);
-        save_btn=(Button)findViewById(R.id.save_btn2);
-        fab=(FloatingActionButton)findViewById(R.id.fab2);
-        final Spinner myspinner=(Spinner)findViewById(R.id.spinner1);
+        name_add = (TextView) findViewById(R.id.name_add2);
+        details_add = (TextView) findViewById(R.id.details_add2);
+        enter_amt = (TextView) findViewById(R.id.enter_amt2);
+        giver = (EditText) findViewById(R.id.giver2);
+        amt = (EditText) findViewById(R.id.amt2);
+        save_btn = (Button) findViewById(R.id.save_btn2);
+        fab = (FloatingActionButton) findViewById(R.id.fab2);
+        final Spinner myspinner = (Spinner) findViewById(R.id.spinner1);
         mAuth = FirebaseAuth.getInstance();
-        db=FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance();
 
 
-        ArrayAdapter<String> myAdapter= new ArrayAdapter<String>(SpendActivity.this,android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drop));
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(SpendActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.drop));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         myspinner.setAdapter(myAdapter);
 
-        mDisplayDate=(TextView)findViewById(R.id.tvDate2);
+        mDisplayDate = (TextView) findViewById(R.id.tvDate2);
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                Calendar cal=Calendar.getInstance();
-                int year=cal.get(Calendar.YEAR);
-                int month=cal.get(Calendar.MONTH);
-                int day=cal.get(Calendar.DAY_OF_MONTH);
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog=new DatePickerDialog(SpendActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,mDateSetListener, year,month, day);
+                DatePickerDialog dialog = new DatePickerDialog(SpendActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
         });
 
-        mDateSetListener=new DatePickerDialog.OnDateSetListener() {
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
@@ -106,18 +107,18 @@ public class SpendActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = myspinner.getSelectedItem().toString();
-                String a=giver.getText().toString().trim();
-                String b=amt.getText().toString().trim();
-                String c=mDisplayDate.getText().toString().trim();
-                String user_id=mAuth.getCurrentUser().getUid();
+                String a = giver.getText().toString().trim();
+                String b = amt.getText().toString().trim();
+                String c = mDisplayDate.getText().toString().trim();
+                String user_id = mAuth.getCurrentUser().getUid();
 
 
-                reff=FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense").child(text);
+                reff = FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
                 reff.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            maxid=dataSnapshot.getChildrenCount();
+                        if (dataSnapshot.exists()) {
+                            maxid = dataSnapshot.getChildrenCount();
                         }
                     }
 
@@ -126,26 +127,47 @@ public class SpendActivity extends AppCompatActivity {
                         ;
                     }
                 });
-
-                final Spending obj=new Spending(c , a , b,text);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                reff.child(String.valueOf(maxid+1)).setValue(obj).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SpendActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                if (validate_amt(b)) {
+                    if (c.length() != 0) {
+                        final Spending obj = new Spending(c, a, b, text);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                reff.child(String.valueOf(maxid + 1)).setValue(obj).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(SpendActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(SpendActivity.this, "Money Dedcuted Successfully", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(SpendActivity.this, HomeActivity.class));
+                                    }
+                                });
+                            }
+                        }, 500);
+                    } else {
+                        Toast.makeText(SpendActivity.this, "Date cannot be empty", Toast.LENGTH_SHORT).show();
                     }
-                }).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(SpendActivity.this,"Money Added Successfully",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(SpendActivity.this, HomeActivity.class));
-                    }
-                });
-            }
-                },500);
+                } else {
+                    Toast.makeText(SpendActivity.this, "Amount should be a number", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    boolean validate_amt(String s) {
+        boolean success = true;
+        if(s.length()==0) {
+            success = false;
+            Toast.makeText(this, "Amount cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch >= '0' && ch <= '9') ;
+            else success = false;
+        }
+        return success;
     }
 }

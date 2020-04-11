@@ -50,25 +50,31 @@ public class MainActivity extends AppCompatActivity {
          Loginbutton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 String user_name=NameText.getText().toString().trim();
-                 String user_password=passwordText.getText().toString().trim();
-                 mAuth.signInWithEmailAndPassword(user_name, user_password)
-                         .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                             @Override
-                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                 if (task.isSuccessful()) {
-                                     // Sign in success, update UI with the signed-in user's information
-                                     FirebaseUser user = mAuth.getCurrentUser();
-                                     startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                 String user_name = NameText.getText().toString().trim();
+                 String user_password = passwordText.getText().toString().trim();
+                 if (user_name.length() != 0 && user_password.length() != 0)
+                 {
+                     mAuth.signInWithEmailAndPassword(user_name, user_password)
+                             .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<AuthResult> task) {
+                                     if (task.isSuccessful()) {
+                                         // Sign in success, update UI with the signed-in user's information
+                                         FirebaseUser user = mAuth.getCurrentUser();
+                                         startActivity(new Intent(MainActivity.this, HomeActivity.class));
 
-                                 } else {
-                                     // If sign in fails, display a message to the user.
-                                     Toast.makeText(MainActivity.this, "Authentication failed.",
-                                             Toast.LENGTH_SHORT).show();
+                                     } else {
+                                         // If sign in fails, display a message to the user.
+                                         Toast.makeText(MainActivity.this, "Authentication failed.",
+                                                 Toast.LENGTH_SHORT).show();
+                                     }
+
                                  }
-
-                             }
-                         });
+                             });
+                 }
+                 else {
+                     Toast.makeText(MainActivity.this, "Enter all the fields", Toast.LENGTH_SHORT).show();
+                 }
              }
          });
     }

@@ -54,6 +54,7 @@
         android:ems="10"
         android:hint="Enter Password"
         android:inputType="textPassword"
+        android:textColor="#F4F1F1"
         android:textColorHint="#5BEFE8E8"
         app:layout_constraintBottom_toTopOf="@+id/Loginbutton"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="390dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_height="80dp"
     android:layout_marginStart="10dp"
     android:background="@drawable/back">
 
     <RelativeLayout
         android:layout_width="400dp"
         android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:layout_margin="4dp"
         android:background="@drawable/back"
-        android:backgroundTint="@android:color/darker_gray"
-        tools:ignore="MissingConstraints"
+        android:backgroundTint="#072778"
         tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
 
         <TextView
             android:id="@+id/mOption"
@@ -24,7 +24,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="40dp"
             android:text="TextView"
-            android:textColor="#100F0F"
+            android:textColor="#FFF"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="250dp"
             android:text="TextView"
-            android:textColor="#100F0F"
+            android:textColor="#FFFF"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:layout_marginStart="48dp"
             android:layout_marginTop="40dp"
             android:text="TextView"
-            android:textColor="#100F0F"
+            android:textColor="#FFF"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,6 +64,25 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.214" />
 
+        <Button
+            android:id="@+id/del_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="315dp"
+            android:layout_marginTop="40dp"
+            android:textSize="10sp"
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_height="30dp"
+            android:layout_width="65dp"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="40dp"
+            android:textSize="10sp"
+            android:text="Update" />
+
+
     </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

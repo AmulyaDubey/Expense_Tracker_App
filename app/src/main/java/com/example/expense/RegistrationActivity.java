@@ -50,32 +50,37 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (validate()) {
                     //Toast.makeText(RegistrationActivity.this, "Noted", Toast.LENGTH_SHORT).show();
-                    final String user_email =email.getText().toString().trim();
-                    final String user_name=NameText.getText().toString().trim();
+                    final String user_email = email.getText().toString().trim();
+                    final String user_name = NameText.getText().toString().trim();
                     String user_password = passwordtext.getText().toString().trim();
-                    mAuth.createUserWithEmailAndPassword(user_email,user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                          if(task.isSuccessful()){
-                              user_id=mAuth.getCurrentUser().getUid();
-                              User obj=new User(user_name,user_email);
-                               DatabaseReference myRef = db.getReference("users");
-                               myRef.child(user_id).setValue(obj).addOnFailureListener(new OnFailureListener() {
-                                   @Override
-                                   public void onFailure(@NonNull Exception e) {
-                                       Toast.makeText(RegistrationActivity.this,""+e,Toast.LENGTH_SHORT).show();
-                                   }
-                               });
-                              Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT ).show();
-                              startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
-                          }
-                          else {
-                              String s = "Sign up Failed" + task.getException();
-                              Toast.makeText(RegistrationActivity.this, s,
-                                      Toast.LENGTH_SHORT).show();
-                          }
-                          }
-                    });
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+                    if (!user_email.matches(emailPattern)) {
+                        Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    user_id = mAuth.getCurrentUser().getUid();
+                                    User obj = new User(user_name, user_email);
+                                    DatabaseReference myRef = db.getReference("users");
+                                    myRef.child(user_id).setValue(obj).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(RegistrationActivity.this, "" + e, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+                                } else {
+                                    String s = "Sign up Failed: " + task.getException();
+                                    Toast.makeText(RegistrationActivity.this, s,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
                 }
             }
         });

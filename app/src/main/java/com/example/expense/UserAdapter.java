@@ -32,7 +32,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull  MyViewHolder holder,  int position) {
                      holder.mOption.setText(profiles.get(position).getDes());
                     holder.mDate.setText(profiles.get(position).getDate());
-                    holder.mAmt.setText(profiles.get(position).getAmt());
+                    holder.mAmt.setText("Rs. "+(profiles.get(position).getAmt()));
             }
 
     @Override

@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ViewActivity extends AppCompatActivity {
+public class View_Exp_Activity extends AppCompatActivity {
 
     private DatabaseReference db;
     private FirebaseAuth mAuth;
@@ -62,7 +62,7 @@ public class ViewActivity extends AppCompatActivity {
                 if(stamp2>0)stamp2 = stamp2 * (-1);
                 if(stamp1!=0 && stamp2!=0)
                 {
-                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
+                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
                     // Toast.makeText(ViewActivity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
                     db.orderByChild("stamp").startAt(stamp2).endAt(stamp1).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -73,20 +73,20 @@ public class ViewActivity extends AppCompatActivity {
                                 Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
                                 list.add(obj2);
                             }
-                            adapter = new UserAdapter(ViewActivity.this,list);
+                            adapter = new UserAdapter(View_Exp_Activity.this,list);
                             recyclerView.setAdapter(adapter);
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError e) {
-                            Toast.makeText(ViewActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(View_Exp_Activity.this,""+e,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
                 else if(stamp1==0 && stamp2!=0)
                 {
-                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
+                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
                     // Toast.makeText(ViewActivity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
                     db.orderByChild("stamp").startAt(stamp2).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -97,20 +97,20 @@ public class ViewActivity extends AppCompatActivity {
                                 Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
                                 list.add(obj2);
                             }
-                            adapter = new UserAdapter(ViewActivity.this,list);
+                            adapter = new UserAdapter(View_Exp_Activity.this,list);
                             recyclerView.setAdapter(adapter);
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError e) {
-                            Toast.makeText(ViewActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(View_Exp_Activity.this,""+e,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
                 else if(stamp1!=0 && stamp2==0)
                 {
-                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
+                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
                     // Toast.makeText(ViewActivity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
                     db.orderByChild("stamp").endAt(stamp1).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -121,40 +121,40 @@ public class ViewActivity extends AppCompatActivity {
                                 Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
                                 list.add(obj2);
                             }
-                            adapter = new UserAdapter(ViewActivity.this,list);
+                            adapter = new UserAdapter(View_Exp_Activity.this,list);
                             recyclerView.setAdapter(adapter);
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError e) {
-                            Toast.makeText(ViewActivity.this,""+e,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(View_Exp_Activity.this,""+e,Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
                 else
-                    {
-                        db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
-                        // Toast.makeText(ViewActivity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
-                        db.orderByChild("stamp").addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                list = new ArrayList<>();
-                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                                    Expenditure obj=snapshot.getValue(Expenditure.class);
-                                    Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
-                                    list.add(obj2);
-                                }
-                                adapter = new UserAdapter(ViewActivity.this,list);
-                                recyclerView.setAdapter(adapter);
-
+                {
+                    db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
+                    // Toast.makeText(ViewActivity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
+                    db.orderByChild("stamp").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            list = new ArrayList<>();
+                            for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                Expenditure obj=snapshot.getValue(Expenditure.class);
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                list.add(obj2);
                             }
+                            adapter = new UserAdapter(View_Exp_Activity.this,list);
+                            recyclerView.setAdapter(adapter);
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError e) {
-                                Toast.makeText(ViewActivity.this,""+e,Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError e) {
+                            Toast.makeText(View_Exp_Activity.this,""+e,Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
 
@@ -170,7 +170,7 @@ public class ViewActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(ViewActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener1, year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(View_Exp_Activity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener1, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -195,7 +195,7 @@ public class ViewActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(ViewActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener2, year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(View_Exp_Activity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, mDateSetListener2, year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

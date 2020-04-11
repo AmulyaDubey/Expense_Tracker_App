@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/button_total_add"
-        android:layout_width="178dp"
-        android:layout_height="357dp"
+        android:layout_width="175dp"
+        android:layout_height="338dp"
         android:background="@drawable/rect_round_btn"
         android:backgroundTint="#B0D8206D"
         android:drawableBottom="@drawable/dollar"
@@ -19,15 +19,15 @@
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintVertical_bias="0.132" />
 
     <Button
         android:id="@+id/button_total_exp"
-        android:layout_width="173dp"
-        android:layout_height="346dp"
+        android:layout_width="176dp"
+        android:layout_height="338dp"
         android:layout_marginStart="27dp"
         android:layout_marginBottom="145dp"
         android:background="@drawable/rect_round_btn"
@@ -38,10 +38,10 @@
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintHorizontal_bias="0.923"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.21" />
+        app:layout_constraintVertical_bias="0.209" />
 
     <TextView
         android:id="@+id/mbal"
