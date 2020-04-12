@@ -43,6 +43,8 @@ public class SpendActivity extends AppCompatActivity {
     private TextView name_add, enter_amt, details_add;
     private EditText giver, amt;
     private Button save_btn;
+    private String id;
+    private int next=-1;
     private FloatingActionButton fab;
     private static final String TAG = "SpendActivity";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -106,34 +108,40 @@ public class SpendActivity extends AppCompatActivity {
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = myspinner.getSelectedItem().toString();
-                String a = giver.getText().toString().trim();
-                String b = amt.getText().toString().trim();
-                String c = mDisplayDate.getText().toString().trim();
+                final String text = myspinner.getSelectedItem().toString();
+                final String a = giver.getText().toString().trim();
+                final String b = amt.getText().toString().trim();
+                final String c = mDisplayDate.getText().toString().trim();
                 String user_id = mAuth.getCurrentUser().getUid();
 
 
-                reff = FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
-                reff.addValueEventListener(new ValueEventListener() {
+                reff = FirebaseDatabase.getInstance().getReference("users").child(user_id);
+
+                reff.child("Index_Expense").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            maxid = dataSnapshot.getChildrenCount();
-                        }
+                        id = dataSnapshot.getValue().toString();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        ;
+
                     }
                 });
+
                 if (validate_amt(b)) {
                     if (c.length() != 0) {
-                        final Spending obj = new Spending(c, a, b, text);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                reff.child(String.valueOf(maxid + 1)).setValue(obj).addOnFailureListener(new OnFailureListener() {
+                                //Toast.makeText(AddActivity.this, id, Toast.LENGTH_SHORT).show();
+                                next=Integer.parseInt(id);
+                                //Toast.makeText(AddActivity.this,""+next, Toast.LENGTH_SHORT).show();
+                                reff.child("Index_Expense").setValue(""+(next+1));
+                                int stamp = Integer.parseInt(c.substring(5) + c.substring(3, 4) + c.substring(0, 2));
+                                stamp = stamp * (-1);
+                                final Expenditure obj = new Expenditure(c, a, b, text, stamp, "Expense");
+                                reff.child("Expense").child(String.valueOf(next)).setValue(obj).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(SpendActivity.this, "" + e, Toast.LENGTH_SHORT).show();
@@ -141,7 +149,7 @@ public class SpendActivity extends AppCompatActivity {
                                 }).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(SpendActivity.this, "Money Dedcuted Successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SpendActivity.this, "Money Deducted Successfully", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(SpendActivity.this, HomeActivity.class));
                                     }
                                 });

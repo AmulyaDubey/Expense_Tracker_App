@@ -115,6 +115,13 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, MainActivity.class));
             }
         });
+
+        view_an.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, Analysis_Activity.class));
+            }
+        });
     }
 
     @Override

@@ -60,6 +60,7 @@ public class View_Exp_Activity extends AppCompatActivity {
 
                 if(stamp1>0)stamp1 = stamp1 * (-1);
                 if(stamp2>0)stamp2 = stamp2 * (-1);
+                //Toast.makeText(View_Exp_Activity.this, ""+stamp1+" "+stamp2, Toast.LENGTH_SHORT).show();
                 if(stamp1!=0 && stamp2!=0)
                 {
                     db= FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Expense");
@@ -70,7 +71,7 @@ public class View_Exp_Activity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Expense");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(View_Exp_Activity.this,list);
@@ -94,7 +95,7 @@ public class View_Exp_Activity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Expense");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(View_Exp_Activity.this,list);
@@ -118,7 +119,7 @@ public class View_Exp_Activity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Expense");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(View_Exp_Activity.this,list);
@@ -142,7 +143,7 @@ public class View_Exp_Activity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"-"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Expense");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(View_Exp_Activity.this,list);

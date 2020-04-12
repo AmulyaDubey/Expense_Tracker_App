@@ -54,6 +54,8 @@ public class ViewActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +72,7 @@ public class ViewActivity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Addition");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(ViewActivity.this,list);
@@ -94,7 +96,7 @@ public class ViewActivity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Addition");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(ViewActivity.this,list);
@@ -118,7 +120,7 @@ public class ViewActivity extends AppCompatActivity {
                             list = new ArrayList<>();
                             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                 Expenditure obj=snapshot.getValue(Expenditure.class);
-                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Addition");
                                 list.add(obj2);
                             }
                             adapter = new UserAdapter(ViewActivity.this,list);
@@ -142,7 +144,7 @@ public class ViewActivity extends AppCompatActivity {
                                 list = new ArrayList<>();
                                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                                     Expenditure obj=snapshot.getValue(Expenditure.class);
-                                    Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp());
+                                    Expenditure obj2=new Expenditure(obj.getDate(),obj.getDes(),"+"+obj.getAmt(),obj.getOption(),obj.getStamp(),"Addition");
                                     list.add(obj2);
                                 }
                                 adapter = new UserAdapter(ViewActivity.this,list);
@@ -211,6 +213,7 @@ public class ViewActivity extends AppCompatActivity {
             }
         };
     }
+
 
 }
 

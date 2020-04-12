@@ -61,23 +61,29 @@ public class RegistrationActivity extends AppCompatActivity {
                         mAuth.createUserWithEmailAndPassword(user_email, user_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                                if (task.isSuccessful())
+                                {
                                     user_id = mAuth.getCurrentUser().getUid();
                                     User obj = new User(user_name, user_email);
                                     DatabaseReference myRef = db.getReference("users");
+
                                     myRef.child(user_id).setValue(obj).addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Toast.makeText(RegistrationActivity.this, "" + e, Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                    myRef.child(user_id).child("Index_Addition").setValue("0");
+                                    myRef.child(user_id).child("Index_Expense").setValue("0");
                                     Toast.makeText(RegistrationActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
-                                } else {
+                                }
+                                else
+                                    {
                                     String s = "Sign up Failed: " + task.getException();
                                     Toast.makeText(RegistrationActivity.this, s,
                                             Toast.LENGTH_SHORT).show();
-                                }
+                                    }
                             }
                         });
                     }

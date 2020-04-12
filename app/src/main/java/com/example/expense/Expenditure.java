@@ -1,20 +1,29 @@
 package com.example.expense;
 
 public class Expenditure {
-    public String date, des, amt, option;
+    public String date, des, amt, option, type;
     int stamp;
 
-    public Expenditure(String d, String e, String a, String text, int st) {
+    public Expenditure(String d, String e, String a, String text, int st, String t) {
         date = d;
         des = e;
         amt = a;
         option = text;
         stamp = st;
+        type=t;
     }
 
 
     public Expenditure() {
 
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getOption() {

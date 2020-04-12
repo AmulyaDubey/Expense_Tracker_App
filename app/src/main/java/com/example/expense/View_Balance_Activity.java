@@ -42,15 +42,18 @@ public class View_Balance_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
-                    Expenditure obj = snapshot.getValue(Expenditure.class);
-                     String str=""+obj.getAmt();
-                     addition += Integer.parseInt(str);
-                     //Toast.makeText(View_Balance_Activity.this,""+balance, Toast.LENGTH_SHORT).show();
+                if(dataSnapshot.getChildrenCount()!=0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (dataSnapshot.exists()) {
+                            Expenditure obj = snapshot.getValue(Expenditure.class);
+                            String str = "" + obj.getAmt();
+                            addition += Integer.parseInt(str);
+                            //Toast.makeText(View_Balance_Activity.this,""+balance, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    //Toast.makeText(View_Balance_Activity.this,""+balance, Toast.LENGTH_SHORT).show();
+                    balance = addition;
                 }
-                  //Toast.makeText(View_Balance_Activity.this,""+balance, Toast.LENGTH_SHORT).show();
-                    balance=addition;
             }
 
             @Override

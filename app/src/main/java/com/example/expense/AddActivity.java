@@ -42,6 +42,8 @@ public class AddActivity extends AppCompatActivity {
     private TextView name_add,enter_amt,details_add;
     private EditText giver,amt;
     private Button save_btn;
+    private String id;
+    private int next=-1;
     private static final String TAG="AddActivity";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     @Override
@@ -94,41 +96,45 @@ public class AddActivity extends AppCompatActivity {
 
 
         save_btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onClick(View v) {
-                String text = myspinner.getSelectedItem().toString();
+                final String text = myspinner.getSelectedItem().toString();
                 String user_id = mAuth.getCurrentUser().getUid();
-                reff = FirebaseDatabase.getInstance().getReference("users").child(user_id).child("Addition");
-
-                reff.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            maxid = dataSnapshot.getChildrenCount();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        ;
-                    }
-                });
+                reff = FirebaseDatabase.getInstance().getReference("users").child(user_id);
 
 
-                String a = giver.getText().toString().trim();
-                String b = amt.getText().toString().trim();
-                String c = mDisplayDate.getText().toString().trim();
+                        reff.child("Index_Addition").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                id = dataSnapshot.getValue().toString();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                final String a = giver.getText().toString().trim();
+                final String b = amt.getText().toString().trim();
+                final String c = mDisplayDate.getText().toString().trim();
+
+
                 if (validate_amt(b)) {
-                    if(c.length()!=0) {
-                        //Toast.makeText(AddActivity.this, c.substring(5)+c.substring(3,4)+c.substring(0,2), Toast.LENGTH_SHORT).show();
-                        int stamp = Integer.parseInt(c.substring(5) + c.substring(3, 4) + c.substring(0, 2));
-                        stamp = stamp * (-1);
-                        final Expenditure obj = new Expenditure(c, a, b, text, stamp);
-
+                    if (c.length() != 0) {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                reff.child(String.valueOf(maxid + 1)).setValue(obj).addOnFailureListener(new OnFailureListener() {
+                                //Toast.makeText(AddActivity.this, id, Toast.LENGTH_SHORT).show();
+                                next=Integer.parseInt(id);
+                                //Toast.makeText(AddActivity.this,""+next, Toast.LENGTH_SHORT).show();
+                                reff.child("Index_Addition").setValue(""+(next+1));
+                                int stamp = Integer.parseInt(c.substring(5) + c.substring(3, 4) + c.substring(0, 2));
+                                stamp = stamp * (-1);
+                                final Expenditure obj = new Expenditure(c, a, b, text, stamp, "Addition");
+                                reff.child("Addition").child(String.valueOf(next)).setValue(obj).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(AddActivity.this, "" + e, Toast.LENGTH_SHORT).show();
@@ -142,17 +148,16 @@ public class AddActivity extends AppCompatActivity {
                                 });
                             }
                         }, 500);
-                    }
-                    else {
+                    } else {
                         Toast.makeText(AddActivity.this, "Date cannot be empty", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(AddActivity.this, "Amount should be a number", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     boolean validate_amt(String s) {
         boolean success = true;
         if(s.length()==0) {
