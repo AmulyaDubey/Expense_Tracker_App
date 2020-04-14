@@ -181,9 +181,16 @@ public class View_Exp_Activity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth + "-" + month + "-" + year;
+                String date;
+                if(month<=9)
+                {
+                    date = dayOfMonth + "-0" + month + "-" + year;
+                }
+                else {
+                    date = dayOfMonth + "-" + month + "-" + year;
+                }
                 from_date.setText(date);
-                stamp1 = Integer.parseInt(date.substring(5) + date.substring(3, 4) + date.substring(0, 2));
+                stamp1 = Integer.parseInt(date.substring(6) + date.substring(3, 5) + date.substring(0, 2));
             }
         };
 
@@ -206,7 +213,14 @@ public class View_Exp_Activity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String date = dayOfMonth + "-" + month + "-" + year;
+                String date;
+                if(month<=9)
+                {
+                    date = dayOfMonth + "-0" + month + "-" + year;
+                }
+                else {
+                    date = dayOfMonth + "-" + month + "-" + year;
+                }
                 to_date.setText(date);
                 stamp2 = Integer.parseInt(date.substring(5) + date.substring(3, 4) + date.substring(0, 2));
             }

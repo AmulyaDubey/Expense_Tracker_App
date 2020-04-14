@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -88,8 +87,15 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                Log.d(TAG, "onDateSet: date: " + dayOfMonth + "/" + month + "/" + year);
-                String date = dayOfMonth + "-" + month + "-" + year;
+                String date;
+                if(month<=9)
+                {
+                     date = dayOfMonth + "-0" + month + "-" + year;
+                }
+                else
+                {
+                     date = dayOfMonth + "-" + month + "-" + year;
+                }
                 mDisplayDate.setText(date);
             }
         };
@@ -131,7 +137,7 @@ public class AddActivity extends AppCompatActivity {
                                 next=Integer.parseInt(id);
                                 //Toast.makeText(AddActivity.this,""+next, Toast.LENGTH_SHORT).show();
                                 reff.child("Index_Addition").setValue(""+(next+1));
-                                int stamp = Integer.parseInt(c.substring(5) + c.substring(3, 4) + c.substring(0, 2));
+                                int stamp = Integer.parseInt(c.substring(6) + c.substring(3, 5) + c.substring(0, 2));
                                 stamp = stamp * (-1);
                                 final Expenditure obj = new Expenditure(c, a, b, text, stamp, "Addition");
                                 reff.child("Addition").child(String.valueOf(next)).setValue(obj).addOnFailureListener(new OnFailureListener() {

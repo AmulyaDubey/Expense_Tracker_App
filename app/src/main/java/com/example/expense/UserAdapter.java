@@ -192,7 +192,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                    @Override
                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                        month = month + 1;
-                       String date = dayOfMonth + "-" + month + "-" + year;
+                       String date;
+                       if(month<=9){
+                            date = dayOfMonth + "-0" + month + "-" + year;
+                       }
+                       else{
+                            date = dayOfMonth + "-" + month + "-" + year;
+                       }
+
                        update_date.setText(date);
                    }
                };
@@ -251,8 +258,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
                                        String b=giver_amt.getText().toString();
                                        String c=update_date.getText().toString();
                                        String d=myspinner.getSelectedItem().toString();
-                                       int stamp = Integer.parseInt(c.substring(5) + c.substring(3, 4) + c.substring(0, 2));
-                                       stamp = stamp * (-1);
+                                       int stamp = Integer.parseInt(c.substring(6) + c.substring(3, 5) + c.substring(0, 2));
+                                       if(stamp>0)stamp = stamp * (-1);
                                        String e=profiles.get(position).getType();
 
                                        if((!a.equals("")) && (!b.equals("")) && (!c.equals(""))){
